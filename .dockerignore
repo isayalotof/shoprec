@@ -1,0 +1,13 @@
+.git
+.env
+.env.*
+data
+__pycache__
+**/__pycache__
+*.pyc
+*.db
+*.db-*
+tests
+.github
+*.zip
+*.bundle

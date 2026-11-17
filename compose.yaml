@@ -1,0 +1,26 @@
+services:
+  shoprec:
+    build: .
+    ports:
+      - "127.0.0.1:${SHOPREC_PORT:-8787}:8787"
+    environment:
+      SHOPREC_ADMIN_TOKEN: "${SHOPREC_ADMIN_TOKEN:?Set SHOPREC_ADMIN_TOKEN in .env}"
+      SHOPREC_PUBLIC_ORIGIN: "${SHOPREC_PUBLIC_ORIGIN:-}"
+      SHOPREC_HOST: "0.0.0.0"
+      SHOPREC_PORT: "8787"
+      SHOPREC_DATA_DIR: "/app/data"
+    volumes:
+      - shoprec_data:/app/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 128
+    mem_limit: 512m
+    restart: unless-stopped
+
+volumes:
+  shoprec_data:

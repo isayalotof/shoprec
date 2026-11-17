@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ShopRec — рекомендации с первого товара</title>
+  <meta name="description" content="ShopRec: рекомендации из каталога, управление партнёрами и учёт переходов.">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="header wrap">
+    <a class="brand" href="/" aria-label="ShopRec, витрина"><span class="brand-mark">sr</span>ShopRec</a>
+    <nav class="main-nav" aria-label="Разделы приложения"><a id="storefront-nav" href="/" aria-current="page">Витрина</a><a id="admin-nav" href="/admin">Кабинет</a></nav>
+    <span class="demo-badge"><i></i>MVP · демо-сценарии</span>
+  </header>
+  <main class="wrap">
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <section id="storefront-view">
+      <section class="intro"><div><div class="eyebrow">РЕКОМЕНДАЦИИ С ПЕРВОГО ТОВАРА</div><h1>Найти похожее.<br>Собрать комплект.</h1></div><p>Подбор из каталога без истории покупок.<br>Выберите магазин и товар, чтобы попробовать.</p></section>
+      <div class="toolbar"><div class="store-label"><select id="store-select" aria-label="Выбрать магазин"></select><span id="store-description"></span></div><label class="select-wrap"><span>Товар на странице</span><select id="product-select" aria-label="Выбрать товар"></select></label><a class="button secondary" href="/admin">Управлять магазином<span aria-hidden="true">↗</span></a></div>
+      <div id="catalog-empty" class="empty-state" hidden><span class="eyebrow">ГОТОВ К ЗАГРУЗКЕ</span><h2>Здесь появятся товары</h2><p>Откройте кабинет и загрузите каталог этого магазина.</p><a class="button yellow" href="/admin">Перейти в кабинет</a></div>
+      <section id="store-grid" class="store-grid" aria-label="Товар и рекомендации">
+        <article class="product-panel"><div class="product-visual" id="hero-art"></div><div class="product-info"><div class="eyebrow" id="product-category"></div><h2 id="product-name"></h2><p id="product-description"></p><div class="price-row"><strong id="product-price"></strong><span id="stock-status"></span></div></div></article>
+        <section class="rec-panel"><div class="rec-heading"><div><span class="eyebrow">ВИДЖЕТ SHOPREC</span><h2>Продолжение выбора</h2></div><span class="live-dot">из каталога</span></div><div class="tabs" role="tablist" aria-label="Режим рекомендаций"><button class="tab active" id="similar-tab" role="tab" aria-selected="true" aria-controls="recommendations" data-mode="similar">Похожие товары</button><button class="tab" id="complementary-tab" role="tab" aria-selected="false" aria-controls="recommendations" data-mode="complementary">Дополнить покупку</button></div><p class="mode-description" id="mode-description"></p><div id="recommendations" class="recommendations" role="tabpanel" aria-labelledby="similar-tab" aria-live="polite"></div><div class="explanation"><span class="explain-mark" aria-hidden="true">i</span><p id="method-description"></p></div></section>
+      </section>
+      <section id="network-entry" class="network-entry"><div><span class="small-label">ПОСЛЕ ЗАВЕРШЕНИЯ ПОКУПКИ</span><p>Дополнения из категорий, которых нет у магазина, — у согласованных партнёров.</p></div><button class="button yellow" id="show-partners">Проверить сценарий покупки<span aria-hidden="true">↗</span></button></section>
+      <section id="partner-panel" class="partner-panel" hidden aria-label="Рекомендации магазинов-партнёров"><div class="partner-heading"><div><span class="eyebrow">СТРАНИЦА ПОСЛЕ ПОКУПКИ · СИМУЛЯЦИЯ</span><h2>Хорошее продолжение</h2><p id="partner-context"></p></div><span class="scenario-badge">Заказ не создаётся</span></div><div id="partner-items" class="partner-items"></div><div class="partner-bottom"><span>Карточки с URL открывают сайт магазина; без URL — демо-карточку. Эти клики считаются отдельно. Покупка не создаётся.</span><button id="close-partners" type="button">Закрыть сценарий</button></div></section>
+      <section class="under-grid"><div><span class="small-label">ТЕКУЩИЙ КАТАЛОГ</span><p><span id="product-count">0</span> товаров · два режима подбора</p></div><details class="integration"><summary>Подключение виджета<span aria-hidden="true">↗</span></summary><p>Добавьте виджет на страницу товара, указав его идентификатор:</p><code id="embed-code"></code><p><a href="/embed-example.html" target="_blank" rel="noopener">Открыть пример подключения</a></p></details></section>
+    </section>
+
+    <section id="admin-view" hidden>
+      <section class="intro admin-intro"><div><div class="eyebrow">КОНТРОЛЬ ОСТАЁТСЯ У МАГАЗИНА</div><h1>Ваш каталог.<br>Ваши правила.</h1></div><p>Настройте рекомендации и партнёрскую сеть.<br>Следите за событиями, которые действительно записаны.</p></section>
+      <section id="login-panel" class="login-panel"><div class="login-copy"><span class="eyebrow">КАБИНЕТ АДМИНИСТРАТОРА</span><h2>Войти в управление</h2><p>Введите ключ администратора, заданный при запуске приложения. Он нужен для изменения каталогов и настроек.</p></div><form id="login-form"><label for="admin-token">Ключ доступа</label><input id="admin-token" type="password" autocomplete="off" spellcheck="false" required placeholder="Введите ключ доступа"><button id="login-button" class="button yellow" type="submit">Войти<span aria-hidden="true">→</span></button><p class="field-help">Ключ остаётся в этой вкладке и очищается при выходе.</p><p id="login-status" class="form-status" role="status" aria-live="polite"></p></form></section>
+      <div id="admin-workspace" hidden>
+        <div class="toolbar admin-toolbar"><div class="store-label"><select id="admin-store-select" aria-label="Магазин для управления"></select><span id="admin-store-description"></span></div><span class="saved-tag" id="catalog-source"></span><button id="logout-button" class="text-button" type="button">Выйти</button></div>
+        <section class="metrics" aria-label="Учтённые события"><article class="metric"><span>Товаров в каталоге</span><strong id="metric-products">—</strong><small>у выбранного магазина</small></article><article class="metric"><span>Входящие клики</span><strong id="metric-incoming">—</strong><small>зарегистрированные, без демо</small></article><article class="metric"><span>Исходящие клики</span><strong id="metric-outgoing">—</strong><small>зарегистрированные, без демо</small></article><article class="metric metric-demo"><span>Демо-клики</span><strong id="metric-demo">—</strong><small>карточки без внешней ссылки</small></article></section>
+        <div class="admin-grid">
+          <section class="admin-card settings-card"><div class="card-heading"><span class="eyebrow">ПАРТНЁРСКАЯ СЕТЬ</span><h2>Кого показывать покупателям</h2><p>Партнёрские предложения доступны только в сценарии после покупки. Категории собственного каталога исключаются автоматически.</p></div>
+            <form id="settings-form"><label class="toggle-row"><span><strong>Участвовать в обмене</strong><small>Показывать партнёров и разрешить рекомендации ваших товаров</small></span><input type="checkbox" id="participating" role="switch"><span class="toggle-track" aria-hidden="true"></span></label>
+              <fieldset id="partners-fieldset"><legend>Разрешённые партнёры</legend><label class="all-choice"><input type="checkbox" id="all-partners"><span>Все участники сети</span></label><div id="partner-options" class="choice-list"></div><p class="field-help">Без выбранных партнёров внешние предложения не показываются.</p></fieldset>
+              <fieldset id="categories-fieldset"><legend>Разрешённые категории</legend><label class="all-choice"><input type="checkbox" id="all-categories"><span>Все подходящие категории</span></label><div id="category-options" class="category-options"></div><p class="field-help">Доступность и совместимость проверяются дополнительно. Партнёр также должен разрешить обмен с вами.</p></fieldset>
+              <div class="form-actions"><button id="settings-save" type="submit" class="button dark">Сохранить правила<span aria-hidden="true">→</span></button><span id="settings-status" class="form-status" role="status" aria-live="polite"></span></div>
+            </form>
+          </section>
+          <section class="admin-card catalog-card"><div class="card-heading"><span class="eyebrow">ДАННЫЕ ДЛЯ ПОДБОРА</span><h2>Загрузить каталог</h2><p>Импорт заменяет товары только выбранного магазина. Каталоги других участников сохраняются.</p></div>
+            <form id="import-form"><label class="file-drop" for="catalog-file"><span class="file-icon" aria-hidden="true">↑</span><strong id="file-name">Выберите JSON или CSV</strong><span id="file-detail">Файл до 1,9 МБ</span><input type="file" id="catalog-file" accept=".json,.csv,application/json,text/csv"></label><p class="field-help">Обязательные поля: id, name, description, category, type, price, in_stock. Для точного подбора добавьте атрибуты совместимости. Необязательное поле url открывает товар на сайте магазина; без него работает демо-карточка. В примере замените ссылки example.com своими.</p><div class="sample-links"><button type="button" id="download-json" class="text-button">Пример JSON ↗</button><button type="button" id="download-csv" class="text-button">Пример CSV ↗</button></div><div class="form-actions"><button id="import-button" type="submit" class="button dark" disabled>Заменить каталог<span aria-hidden="true">→</span></button></div><p id="import-status" class="form-status" role="status" aria-live="polite"></p></form>
+          </section>
+        </div>
+        <section class="admin-card traffic-card"><div class="report-heading"><div class="card-heading"><span class="eyebrow">УЧЁТ ПЕРЕХОДОВ</span><h2>Что произошло на самом деле</h2><p id="report-period">События, сохранённые приложением. Клик не означает заказ или продажу.</p></div><button id="refresh-report" class="button secondary" type="button">Обновить<span aria-hidden="true">↻</span></button></div><div id="report-status" class="form-status" role="status" aria-live="polite"></div><div class="table-scroll"><table class="traffic-table"><caption class="sr-only">Клики магазинов, учитываемые приложением</caption><thead><tr><th scope="col">Магазин</th><th scope="col">Входящие</th><th scope="col">Исходящие</th><th scope="col">Демо-входящие</th><th scope="col">Демо-исходящие</th></tr></thead><tbody id="traffic-rows"></tbody></table></div><div class="activity-heading"><h3>Последние клики</h3><span>до 12 последних событий</span></div><ul id="recent-events" class="activity-list" aria-label="Последние события"></ul><p class="report-note">Клики по внешним ссылкам и клики из симуляции считаются отдельно. Подтверждение загрузки внешнего сайта, заказы и выручка в этой версии не измеряются.</p></section>
+      </div>
+    </section>
+    <footer><span id="data-note">Начальные магазины и товары вымышлены. Для своих данных используйте импорт в кабинете.</span><span>ShopRec · MVP</span></footer>
+  </main>
+  <script src="/art.js"></script><script src="/app.js"></script>
+</body>
+</html>
